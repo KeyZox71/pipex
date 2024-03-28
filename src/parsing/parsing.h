@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 10:03:04 by adjoly            #+#    #+#             */
-/*   Updated: 2024/03/28 23:04:32 by adjoly           ###   ########.fr       */
+/*   Created: 2024/03/28 16:54:40 by adjoly            #+#    #+#             */
+/*   Updated: 2024/03/28 22:37:29 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PARSING_H
+# define PARSING_H
 
-int	main(int ac, char **av)
+typedef struct s_pcmd
 {
-	ft_putstr_fd(*av, 1);
-	return (ac);
-}
+	char	*cmd;
+	char	**option;
+}	t_pcmd;
+
+void	ft_freearr(char	**arr);
+
+#endif

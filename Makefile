@@ -6,7 +6,7 @@
 #    By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 11:03:22 by adjoly            #+#    #+#              #
-#    Updated: 2024/03/21 10:10:54 by adjoly           ###   ########.fr        #
+#    Updated: 2024/03/28 21:59:20 by adjoly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,15 @@ OBJSDIR = obj/
 
 SRCDIR = src/
 
-SRCS = main.c \
+SRC = $(shell find src -name '*.c') 
 
-OBJS = $(addprefix $(OBJSDIR), $(SRCS:.c=.o))
+I_DIR = include/
+
+LIBFT_DIR = libft/
+	   
+INCLUDE = -I $(I_DIR) -I $(LIBFT_DIR)
+
+OBJS = $(addprefix $(OBJSDIR), $(SRC:.c=.o))
 
 FLAGS = -Werror -Wall -Wextra -g
 
@@ -31,9 +37,9 @@ $(NAME): $(OBJS)
 	@$(CC) $(FLAGS) $(OBJS) $(LIB) -o $(NAME)
 	@echo "[✔] Compiled"
 
-$(OBJSDIR)%.o: $(SRCDIR)%.c
+$(OBJSDIR)%.o: %.c
 	@mkdir -p $(@D)
-	@$(CC) $(FLAGS) $< -c -o $@
+	@$(CC) $(INCLUDE) $(FLAGS) $< -c -o $@
 	@echo "[✔] $< compiled"
 
 all: $(NAME)
