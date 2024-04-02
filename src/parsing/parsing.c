@@ -6,12 +6,27 @@
 /*   By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 21:13:26 by adjoly            #+#    #+#             */
-/*   Updated: 2024/03/30 12:01:17 by adjoly           ###   ########.fr       */
+/*   Updated: 2024/04/02 11:08:57 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "libft.h"
+
+size_t	ft_arrlen(char **arr)
+{
+	size_t	len;
+	char	**tmp;
+
+	tmp = arr;
+	len = 0;
+	while (*tmp)
+	{
+		len += ft_strlen(*tmp);
+		tmp++;
+	}
+	return (len);
+}
 
 t_pcmd	split_cmd(char *cmd_av)
 {
@@ -21,8 +36,7 @@ t_pcmd	split_cmd(char *cmd_av)
 
 	split = ft_split(cmd_av, 32);
 	tmp_split = split;
-	cmd.cmd = *tmp_split;
-	tmp_split++;
+	cmd.cmd = ft_strdup(*tmp_split);
 	cmd.option = tmp_split;
 	return (cmd);
 }
@@ -34,9 +48,9 @@ t_pcmd	*parse_cmd(int ac, char **av)
 	t_pcmd	*cmd_tmp;
 	
 	(void)ac;
-	cmd_arr = ft_calloc(10000, 1);
+	cmd_arr = ft_calloc(ac, sizeof(t_pcmd) + 1);
 	cmd_tmp = cmd_arr;
-	tmp = av + 2;
+	tmp = av;
 	while (*tmp)
 	{
 		*cmd_tmp = split_cmd(*tmp);

@@ -6,7 +6,7 @@
 /*   By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 10:03:04 by adjoly            #+#    #+#             */
-/*   Updated: 2024/03/30 13:22:17 by adjoly           ###   ########.fr       */
+/*   Updated: 2024/04/02 11:08:15 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int ac, char **av)
 	t_pcmd	*tmp;
 	char	**option_tmp;
 
-	cmd = parse_cmd(ac, av);
+	cmd = parse_cmd(ac, av + 2);
 	tmp = cmd;
 	while (tmp && (*tmp).cmd)
 	{
