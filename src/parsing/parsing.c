@@ -6,7 +6,7 @@
 /*   By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 21:13:26 by adjoly            #+#    #+#             */
-/*   Updated: 2024/04/03 14:20:56 by adjoly           ###   ########.fr       */
+/*   Updated: 2024/04/07 11:03:02 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_pcmd	*parse_cmd(int ac, char **av)
 	int		i;
 	t_pcmd	*cmd_arr;
 	t_pcmd	*cmd_tmp;
-	
+
 	i = 0;
 	cmd_arr = ft_calloc(ac + 1, sizeof(t_pcmd));
 	cmd_tmp = cmd_arr;

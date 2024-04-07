@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_freetab.c                                       :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 22:34:09 by adjoly            #+#    #+#             */
-/*   Updated: 2024/03/30 11:58:39 by adjoly           ###   ########.fr       */
+/*   Created: 2024/04/06 14:15:47 by adjoly            #+#    #+#             */
+/*   Updated: 2024/04/06 14:18:27 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#ifndef EXEC_H
+# define EXEC_H
 
-void	ft_freearr(char	**arr)
-{
-	char	**tmp;
+# include <sys/wait.h>
 
-	tmp = arr;
-	while(tmp && *tmp)
-	{
-		free(*tmp);
-		tmp++;
-	}
-	free(arr);
-}
+#include "pipex.h"
+
+void	exec_pipe(t_pipex *pipex);
+
+#endif

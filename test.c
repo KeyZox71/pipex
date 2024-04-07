@@ -6,10 +6,9 @@
 /*   By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:36:42 by adjoly            #+#    #+#             */
-/*   Updated: 2024/04/03 16:27:03 by adjoly           ###   ########.fr       */
+/*   Updated: 2024/04/04 15:20:24 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <stdio.h>
 #include <unistd.h>
@@ -24,7 +23,8 @@ int main()
 	int fd[2];
 	if (pipe(fd) == -1)
 		return(1);
-	int	pid = fork();
+	int	pid;
+	pid = fork();
 	if (!pid)
 	{
 		dup2(fd[1], STDOUT_FILENO);
