@@ -6,13 +6,35 @@
 /*   By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 10:03:04 by adjoly            #+#    #+#             */
-/*   Updated: 2024/04/08 12:49:21 by adjoly           ###   ########.fr       */
+/*   Updated: 2024/04/08 15:26:06 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "parsing.h"
 #include "pipex.h"
+#include <unistd.h>
+
+void	check_cmd_validity(t_pipex *pipex)
+{
+	t_pcmd	*cmd;
+
+	cmd = pipex->cmd;
+	while (cmd)
+	{
+		if (access(cmd->cmd, X_OK) != 0)
+		{
+		//	ft_freearr((*cmd).option);
+		//	if (pipex->cmd[1].cmd)
+		//	{
+		//		ft_freearr(pipex->cmd[1].option);
+		//		free(pipex->cmd[1].cmd);
+		//	}
+			ft_senderror(pipex, "Error: Command not found");
+		}	
+		cmd++;
+	}
+}
 
 void	check_empty_args(char **av, t_pipex *pipex)
 {
@@ -71,9 +93,10 @@ int	main(int ac, char **av, char **env)
 	pipex->cmd = parse_cmd(ac - 3, av);
 	pipex->env = env;
 	getpath(pipex);
-	if (pipex->path == NULL)
-		ft_senderror(pipex, "Error : Can't find path");
-	get_arrcmd_path(pipex);
+	if (pipex->path)
+		get_arrcmd_path(pipex);
+	else
+		check_cmd_validity(pipex);
 	exec_pipe(pipex);
 	ft_freearr(pipex->path);
 	free_pcmd(pipex->cmd);

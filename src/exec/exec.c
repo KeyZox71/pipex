@@ -6,7 +6,7 @@
 /*   By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:07:27 by adjoly            #+#    #+#             */
-/*   Updated: 2024/04/07 11:01:39 by adjoly           ###   ########.fr       */
+/*   Updated: 2024/04/08 14:09:14 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,11 @@ pid_t	ft_exec_scnd_pipe(t_pipex *pipex, int fd[2])
 	{
 		outfile = open(pipex->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
 		dup2(outfile, STDOUT_FILENO);
 		close(outfile);
-		close(fd[0]);
 		close(fd[1]);
+		close(pipex->infile);
 		execve(pipex->cmd[1].cmd, pipex->cmd[1].option, pipex->env);
 	}
 	return (pid);
