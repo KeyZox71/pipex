@@ -6,7 +6,7 @@
 /*   By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 10:03:04 by adjoly            #+#    #+#             */
-/*   Updated: 2024/04/08 15:26:06 by adjoly           ###   ########.fr       */
+/*   Updated: 2024/04/08 15:43:47 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,6 @@ void	check_cmd_validity(t_pipex *pipex)
 	{
 		if (access(cmd->cmd, X_OK) != 0)
 		{
-		//	ft_freearr((*cmd).option);
-		//	if (pipex->cmd[1].cmd)
-		//	{
-		//		ft_freearr(pipex->cmd[1].option);
-		//		free(pipex->cmd[1].cmd);
-		//	}
 			ft_senderror(pipex, "Error: Command not found");
 		}	
 		cmd++;

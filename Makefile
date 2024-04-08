@@ -6,7 +6,7 @@
 #    By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 11:03:22 by adjoly            #+#    #+#              #
-#    Updated: 2024/04/08 15:21:46 by adjoly           ###   ########.fr        #
+#    Updated: 2024/04/08 15:40:28 by adjoly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,13 @@ OBJSDIR = obj/
 
 SRCDIR = src/
 
-SRC = $(shell find src -name '*.c') 
+SRC =	src/exec/exec.c \
+		src/parsing/parsing.c \
+		src/main.c \
+		src/utils/getpath.c \
+		src/utils/set_path.c \
+		src/utils/ft_freearr.c \
+		src/utils/ft_senderror.c \
 
 I_DIR = include/
 

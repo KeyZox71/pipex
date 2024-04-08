@@ -6,35 +6,13 @@
 /*   By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:07:27 by adjoly            #+#    #+#             */
-/*   Updated: 2024/04/08 14:09:14 by adjoly           ###   ########.fr       */
+/*   Updated: 2024/04/08 15:42:29 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "pipex.h"
 #include <sys/wait.h>
-
-//void	ft_printtamerelaputedemaelysdearraydemerde(char **arr)
-//{
-//	char	**ll = arr;
-//
-//	while (*ll)
-//	{
-//		ft_putendl_fd(*ll, STDOUT_FILENO);
-//		ll++;
-//	}
-//}
-//
-//void	ft_printstdindemerdemaelystagueule_ps_flocon_est_mims(int fd)
-//{
-////	char	*s = malloc(1);
-//	ft_putnbr_fd(fd, 2);
-//	/*while (read(fd, s, 1))
-//	{
-//		ft_putchar_fd(*s, 2);
-//	}*/
-//}
-//
 
 pid_t	ft_exec_fst_pipe(t_pipex *pipex, int fd[2])
 {
