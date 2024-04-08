@@ -6,31 +6,15 @@
 /*   By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 10:03:04 by adjoly            #+#    #+#             */
-/*   Updated: 2024/04/07 11:03:19 by adjoly           ###   ########.fr       */
+/*   Updated: 2024/04/08 12:49:21 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "parsing.h"
 #include "pipex.h"
-#include <stdlib.h>
-#include <unistd.h>
 
-void	free_pcmd(t_pcmd *cmd)
-{
-	t_pcmd	*tmp;
-
-	tmp = cmd;
-	while (tmp && tmp->cmd)
-	{
-		free(tmp->cmd);
-		ft_freearr(tmp->option);
-		tmp++;
-	}
-	free(cmd);
-}
-
-void	check_empty_args(char **av)
+void	check_empty_args(char **av, t_pipex *pipex)
 {
 	char	**tmp;
 	char	*tmp_av;
@@ -40,8 +24,6 @@ void	check_empty_args(char **av)
 	while (*tmp)
 	{
 		tmp_av = *tmp;
-		if (!*tmp_av)
-			ft_senderror(NULL, "You have empty argument");
 		while (*tmp_av)
 		{
 			if (*tmp_av != 32)
@@ -49,23 +31,28 @@ void	check_empty_args(char **av)
 			tmp_av++;
 		}
 		if (!*tmp_av)
-			ft_senderror(NULL, "You have empty argument");
+		{
+			ft_putendl_fd("You have empty argument", STDERR_FILENO);
+			free(pipex);
+			exit(EXIT_FAILURE);
+		}
 		tmp++;
 	}
 }
 
-void	ft_senderror(t_pipex *pipex, char *msg)
+void	check_files(int ac, char **av, t_pipex *pipex)
 {
-	(void)pipex;
-	ft_putendl_fd(msg, STDERR_FILENO);
-	if (!pipex)
-		exit(EXIT_FAILURE);
-	if (pipex->path)
-		ft_freearr(pipex->path);
-	if (pipex->cmd)
-		free_pcmd(pipex->cmd);
-	free(pipex);
-	exit(EXIT_FAILURE);
+	int	out;
+
+	pipex->infile = open(av[1], O_RDONLY);
+	pipex->outfile = av[ac - 1];
+	if (pipex->infile == -1)
+		ft_senderror_file(pipex, "Error: Infile can't be opened");
+	dup2(pipex->infile, STDIN_FILENO);
+	out = open(pipex->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (out < 0)
+		ft_senderror_file(pipex, "Error: Outfile can't be opened");
+	close(out);
 }
 
 int	main(int ac, char **av, char **env)
@@ -74,18 +61,18 @@ int	main(int ac, char **av, char **env)
 
 	pipex = malloc(sizeof(t_pipex));
 	if (ac != 5)
-		ft_senderror(pipex, "Error : Invalid number of args");
-	check_empty_args(av);
-	pipex->infile = open(av[1], O_RDONLY);
-	dup2(pipex->infile, STDIN_FILENO);
-	pipex->outfile = av[ac - 1];
+	{
+		free(pipex);
+		ft_putendl_fd("Error : Invalid number of args", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
+	check_empty_args(av, pipex);
+	check_files(ac, av, pipex);
 	pipex->cmd = parse_cmd(ac - 3, av);
 	pipex->env = env;
 	getpath(pipex);
 	if (pipex->path == NULL)
 		ft_senderror(pipex, "Error : Can't find path");
-	ft_strlcpy(*(pipex->path), *(pipex->path) + 5, \
-			ft_strlen(*(pipex->path) + 5) + 1);
 	get_arrcmd_path(pipex);
 	exec_pipe(pipex);
 	ft_freearr(pipex->path);

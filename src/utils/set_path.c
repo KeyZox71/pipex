@@ -6,7 +6,7 @@
 /*   By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 13:31:15 by adjoly            #+#    #+#             */
-/*   Updated: 2024/04/06 17:30:03 by adjoly           ###   ########.fr       */
+/*   Updated: 2024/04/08 12:53:46 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*get_cmd_path(t_pipex *pipex, char *cmd)
 	char	**path;
 	char	*tmp;
 
+	if (access(cmd, X_OK) == 0)
+		return (cmd);
 	path = pipex->path;
 	while (*path)
 	{
@@ -42,6 +44,7 @@ char	*get_cmd_path(t_pipex *pipex, char *cmd)
 		free(tmp);
 		path++;
 	}
+	free(cmd);
 	return (NULL);
 }
 
@@ -53,6 +56,16 @@ void	get_arrcmd_path(t_pipex *pipex)
 	while ((*cmd).option)
 	{
 		(*cmd).cmd = get_cmd_path(pipex, (*cmd).cmd);
+		if (!(*cmd).cmd)
+		{
+			ft_freearr((*cmd).option);
+			if (pipex->cmd[1].cmd)
+			{
+				ft_freearr(pipex->cmd[1].option);
+				free(pipex->cmd[1].cmd);
+			}
+			ft_senderror(pipex, "Error: Command not found");
+		}
 		cmd++;
 	}
 }

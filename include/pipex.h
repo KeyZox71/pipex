@@ -6,7 +6,7 @@
 /*   By: adjoly <adjoly@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 21:14:06 by adjoly            #+#    #+#             */
-/*   Updated: 2024/04/06 17:26:47 by adjoly           ###   ########.fr       */
+/*   Updated: 2024/04/07 17:02:48 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@ void	ft_senderror(t_pipex *pipex, char *msg);
 void	getpath(t_pipex *pipex);
 void	get_arrcmd_path(t_pipex *pipex);
 void	exec_pipe(t_pipex *pipex);
+void	ft_senderror(t_pipex *pipex, char *msg);
+void	ft_senderror_file(t_pipex *pipex, char *msg);
+void	free_pcmd(t_pcmd *cmd);
 
 #endif
